@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
+from __future__ import print_function
+
 import sys
 import io
 
@@ -22,10 +24,11 @@ def main(argv):
     for d in documents:
         txtout = path.join(outdir, d.id+'.txt')
         with io.open(txtout, 'wt', encoding='utf-8') as out:
-            out.write(d.text)
+            print(d.text, file=out)
         annout = path.join(outdir, d.id+'.ann')
         with io.open(annout, 'wt', encoding='utf-8') as out:
-            out.write(u'\n'.join(d.to_standoff()))
+            for l in d.to_standoff():
+                print(l, file=out)
 
 if __name__ == '__main__':
     sys.exit(main(sys.argv))
